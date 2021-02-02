@@ -1,0 +1,33 @@
+{
+    "name": "codeinfo/bytedance-for-laravel",
+    "description": "bytedance api",
+    "authors": [
+      {
+        "name": "nanye",
+        "email": "nanye@codeinfo.cn"
+      }
+    ],
+    "require": {
+      "php": "^7.2",
+      "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+      "laravel/framework": "^6.2",
+      "friendsofphp/php-cs-fixer": "^2.16"
+    },
+    "autoload": {
+      "psr-4": {
+          "Codeinfo\\Bytedance\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+          "providers": [
+              "Codeinfo\\Bytedance\\ServiceProvider"
+          ],
+          "aliases": {
+              "EasyWeChat": "Codeinfo\\Bytedance\\Facade"
+          }
+      }
+    }
+}
