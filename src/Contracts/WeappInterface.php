@@ -1,4 +1,5 @@
 <?php
+
 namespace Codeinfo\Bytedance\Contracts;
 
 interface WeappInterface

@@ -1,4 +1,5 @@
 <?php
+
 namespace Codeinfo\Bytedance;
 
 use App\Exceptions\CustomException;
@@ -22,14 +23,13 @@ class WeappService implements WeappInterface
     }
 
     /**
-     * 获取 access_token
+     * 获取 access_token.
      *
      * @return string
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, function () {
-
+        return Cache::remember($this->cachePrefix.'access_token', 7200, function () {
             $url = 'https://developer.toutiao.com/api/apps/token';
 
             $options = [
@@ -45,10 +45,11 @@ class WeappService implements WeappInterface
     }
 
     /**
-     * 登陆
+     * 登陆.
      *
      * @param string $code
      * @param string $anonymous_code 匿名
+     *
      * @return void
      */
     public function code2Session($data)
@@ -75,7 +76,8 @@ class WeappService implements WeappInterface
     /**
      * 创建二维码
      *
-     * @param Array $form_params
+     * @param array $form_params
+     *
      * @return mixed
      */
     public function createQRCode($form_params = [])
@@ -85,7 +87,7 @@ class WeappService implements WeappInterface
         $options = [
             'json' => array_merge($form_params, [
                 'access_token' => $this->access_token,
-                'appname' => 'douyin',
+                'appname'      => 'douyin',
             ]),
         ];
 

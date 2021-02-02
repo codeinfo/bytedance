@@ -1,4 +1,5 @@
 <?php
+
 namespace Codeinfo\Bytedance\Exceptions;
 
 use Exception;
@@ -23,7 +24,8 @@ class ResponseExcetion extends Exception
     /**
      * Report or log an exception.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
+     *
      * @return void
      */
     public function report()
@@ -39,12 +41,13 @@ class ResponseExcetion extends Exception
      * 将异常渲染至 HTTP 响应值中。
      *
      * @param  \Illuminate\Http\Request
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request)
     {
         return response()->json([
-            'code' => $this->custom_code,
+            'code'    => $this->custom_code,
             'message' => $this->custom_message,
         ]);
     }

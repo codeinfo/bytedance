@@ -1,11 +1,12 @@
 <?php
+
 namespace Codeinfo\Bytedance\Traits\Platform;
 
 use Codeinfo\Bytedance\Http\Request;
 
 trait Oauth
 {
-    public function getOauthToken($code, $grant_type = "authorization_code")
+    public function getOauthToken($code, $grant_type = 'authorization_code')
     {
         // 抖音初始化
         $client_key = $this->client_key; // string | 应用唯一标识
@@ -13,7 +14,7 @@ trait Oauth
 
         $url = 'https://open.douyin.com/oauth/access_token/';
 
-        $query = 'client_key=' . $client_key . '&client_secret=' . $client_secret . '&code=' . $code . '&grant_type=' . $grant_type;
+        $query = 'client_key='.$client_key.'&client_secret='.$client_secret.'&code='.$code.'&grant_type='.$grant_type;
 
         $options = [
             'query' => $query,

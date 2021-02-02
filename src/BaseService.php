@@ -1,4 +1,5 @@
 <?php
+
 namespace Codeinfo\Bytedance;
 
 use Codeinfo\Bytedance\Contracts\BaseInterface;
@@ -44,8 +45,7 @@ class BaseService implements BaseInterface
     }
 
     /**
-     * 初始化配置
-     *
+     * 初始化配置.
      */
     public function init($config)
     {
@@ -58,21 +58,22 @@ class BaseService implements BaseInterface
      *
      * @param string $scope
      * @param string $redirect_uri
+     *
      * @return string
      */
     public function genrateUrl($scope, $redirect_uri)
     {
         $query = [
-            'client_key' => $this->client_key,
+            'client_key'    => $this->client_key,
             'response_type' => 'response_type',
-            'scope' => $scope,
-            'redirect_uri' => $redirect_uri,
+            'scope'         => $scope,
+            'redirect_uri'  => $redirect_uri,
         ];
 
         $url = 'https://open.douyin.com/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&' . $key . '=' . $value;
+            $url .= '&'.$key.'='.$value;
         }
 
         return $url;
@@ -82,45 +83,49 @@ class BaseService implements BaseInterface
      * 生成用户静默授权地址
      *
      * @param string $redirect_uri
+     *
      * @return string
      */
     public function genrateBaseUrl($redirect_uri, $state = null)
     {
         $query = [
-            'client_key' => $this->client_key,
+            'client_key'    => $this->client_key,
             'response_type' => 'code',
-            'scope' => 'login_id',
-            'state' => $state ?? '',
-            'redirect_uri' => $redirect_uri,
+            'scope'         => 'login_id',
+            'state'         => $state ?? '',
+            'redirect_uri'  => $redirect_uri,
         ];
 
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&' . $key . '=' . $value;
+            $url .= '&'.$key.'='.$value;
         }
 
         return $url;
     }
 
     /**
-     * 解密手机号
+     * 解密手机号.
      *
      * @param string $string
+     *
      * @return string
      */
     public function decrypt($string)
     {
         $key = $this->client_secret;
         $iv = substr($key, 0, 16);
+
         return openssl_decrypt(base64_decode($string), 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
     }
 
     /**
-     * 获取用户信息
+     * 获取用户信息.
      *
      * @param string $open_id
      * @param string $access_token
+     *
      * @return mixed
      */
     public function userinfo($open_id, $access_token)
@@ -129,7 +134,7 @@ class BaseService implements BaseInterface
 
         $query = [
             'access_token' => $access_token,
-            'open_id' => $open_id,
+            'open_id'      => $open_id,
         ];
 
         $options = [
@@ -146,9 +151,10 @@ class BaseService implements BaseInterface
     }
 
     /**
-     *  上传视频
+     *  上传视频.
      *
      * @param [type] $query
+     *
      * @return mixed
      */
     public function videoUpload($query, $video_path)
@@ -156,12 +162,12 @@ class BaseService implements BaseInterface
         $url = 'https://open.douyin.com/video/upload/';
 
         $options = [
-            'query' => $query,
+            'query'     => $query,
             'multipart' => [
                 [
-                    'name' => 'video',
+                    'name'     => 'video',
                     'contents' => fopen($video_path, 'r'),
-                    'headers' => [
+                    'headers'  => [
                         'Content-Type' => 'video/mp4',
                     ],
                 ],
@@ -174,6 +180,7 @@ class BaseService implements BaseInterface
             Log::error('videoUpload', [
                 'message' => $e->getMessage(),
             ]);
+
             throw new ResponseExcetion('上传视频发生错误', 300006, $e);
         }
 
@@ -181,10 +188,11 @@ class BaseService implements BaseInterface
     }
 
     /**
-     * 创建视频
+     * 创建视频.
      *
      * @param [type] $query
      * @param [type] $form_params
+     *
      * @return mixed
      */
     public function videoCreate($query, $form_params)
@@ -193,7 +201,7 @@ class BaseService implements BaseInterface
 
         $options = [
             'query' => $query,
-            'json' => $form_params,
+            'json'  => $form_params,
         ];
 
         try {
@@ -204,7 +212,7 @@ class BaseService implements BaseInterface
 
         Log::info('videoCreate', [
             'form_params' => $form_params,
-            'res' => $result,
+            'res'         => $result,
         ]);
 
         return $result;
@@ -216,8 +224,9 @@ class BaseService implements BaseInterface
 
         $options = [
             'query' => $query,
-            'json' => $form_params,
+            'json'  => $form_params,
         ];
+
         try {
             $result = $this->curlGuzzleHttp($url, 'POST', $options);
         } catch (\Exception $e) {
@@ -228,18 +237,20 @@ class BaseService implements BaseInterface
     }
 
     /**
-     * 查询视频信息
+     * 查询视频信息.
      *
      * @param string $query
+     *
      * @return json
      */
     public function queryVideoData($query, $form_params)
     {
-        $url = "https://open.douyin.com//video/data/";
+        $url = 'https://open.douyin.com//video/data/';
         $options = [
             'query' => $query,
-            'json' => $form_params,
+            'json'  => $form_params,
         ];
+
         try {
             $result = $this->curlGuzzleHttp($url, 'POST', $options);
         } catch (\Exception $e) {
@@ -250,20 +261,21 @@ class BaseService implements BaseInterface
     }
 
     /**
-     * 获取 client_token
+     * 获取 client_token.
      *
      * @return void
      */
     public function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, function () {
+        return Cache::remember($this->cachePrefix.'access_token', 7200, function () {
             $res = $this->curlAccessToken();
+
             return $res->data->access_token;
         });
     }
 
     /**
-     * 请求获取 client_token
+     * 请求获取 client_token.
      *
      * @return mixed
      */
@@ -272,9 +284,9 @@ class BaseService implements BaseInterface
         $url = 'https://open.douyin.com/oauth/client_token/';
 
         $query = [
-            'client_key' => $this->client_key,
+            'client_key'    => $this->client_key,
             'client_secret' => $this->client_secret,
-            'grant_type' => 'client_credential',
+            'grant_type'    => 'client_credential',
         ];
 
         $options = [
@@ -335,7 +347,7 @@ class BaseService implements BaseInterface
     // }
 
     /**
-     * 抖音主页解析
+     * 抖音主页解析.
      *
      * @return void
      */
@@ -359,11 +371,12 @@ class BaseService implements BaseInterface
     }
 
     /**
-     * 获取远程地址跳转后URL参数
+     * 获取远程地址跳转后URL参数.
      *
      * @param [type] $url
      * @param string $method
-     * @param array $options
+     * @param array  $options
+     *
      * @return mixed
      */
     private static function getCurlResponse($url, $method = 'GET', $options = [])
@@ -371,7 +384,7 @@ class BaseService implements BaseInterface
         $client = new Client([
             // You can set any number of default request options.
             'timeout' => 20.0,
-            'verify' => false,
+            'verify'  => false,
         ]);
 
         $options = array_merge($options, [
@@ -396,5 +409,4 @@ class BaseService implements BaseInterface
 
         return $response;
     }
-
 }
