@@ -1,11 +1,11 @@
 <?php
+
 namespace Codeinfo\Bytedance\Http;
 
-use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use Illuminate\Support\Facades\Log;
 
 class Request
@@ -22,7 +22,7 @@ class Request
     }
 
     /**
-     * init Client
+     * init Client.
      *
      * @return mixed
      */
@@ -33,14 +33,13 @@ class Request
 
         $this->client = new Client([
             'timeout' => $this->timeout,
-            'verify' => $this->verify,
+            'verify'  => $this->verify,
             'handler' => $stack,
         ]);
     }
 
     protected static function initOptions($options)
     {
-
         if (!is_array($options)) {
             throw new \Exception('options must be array');
         }
@@ -51,11 +50,12 @@ class Request
     }
 
     /**
-     * 请求服务器
+     * 请求服务器.
      *
      * @param [type] $url
      * @param string $method
-     * @param array $options
+     * @param array  $options
+     *
      * @return mixed
      */
     public function httpGet($url, $options = [])
@@ -83,7 +83,8 @@ class Request
      * POST请求
      *
      * @param [type] $url
-     * @param array $options
+     * @param array  $options
+     *
      * @return void
      */
     public static function post($url, $options = [])
@@ -91,7 +92,7 @@ class Request
         $client = new Client([
             // You can set any number of default request options.
             'timeout' => 20.0,
-            'verify' => false,
+            'verify'  => false,
         ]);
 
         $options = array_merge($options, [

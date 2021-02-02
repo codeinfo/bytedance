@@ -13,5 +13,4 @@ namespace Codeinfo\Bytedance\Exceptions;
 
 class InvalidArgumentException extends Exception
 {
-
 }

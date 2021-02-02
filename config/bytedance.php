@@ -9,7 +9,7 @@ return [
     'url' => env('BYTE_URL', ''),
 
     'weapp' => [
-        'appid' => env('BYTE_WEAPP_APPID', ''),
+        'appid'  => env('BYTE_WEAPP_APPID', ''),
         'secret' => env('BYTE_WEAPP_SECRET', ''),
     ],
 ];

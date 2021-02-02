@@ -2,10 +2,8 @@
 
 namespace Codeinfo\Bytedance;
 
-use Codeinfo\Bytedance\BaseService;
 use Codeinfo\Bytedance\Contracts\BaseInterface;
 use Codeinfo\Bytedance\Contracts\WeappInterface;
-use Codeinfo\Bytedance\WeappService;
 use Illuminate\Contracts\Support\DeferrableProvider as LaravelDeferrableProvider;
 use Illuminate\Support\ServiceProvider as LaravelServiceProvider;
 
@@ -18,7 +16,6 @@ class ServiceProvider extends LaravelServiceProvider implements LaravelDeferrabl
      */
     public function register(): void
     {
-
         $this->registerPlatform();
 
         $this->registerWeapp();
@@ -32,14 +29,14 @@ class ServiceProvider extends LaravelServiceProvider implements LaravelDeferrabl
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/bytedance.php' => config_path('bytedance.php'),
+            __DIR__.'/../config/bytedance.php' => config_path('bytedance.php'),
         ], 'config');
     }
 
     public function provides(): array
     {
         return [
-            BaseInterface::class => 'bytedance.platform',
+            BaseInterface::class  => 'bytedance.platform',
             WeappInterface::class => 'bytedance.weapp',
         ];
     }
@@ -61,5 +58,4 @@ class ServiceProvider extends LaravelServiceProvider implements LaravelDeferrabl
 
         $this->app->alias(WeappInterface::class, 'bytedance.weapp');
     }
-
 }
