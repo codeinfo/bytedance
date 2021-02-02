@@ -19,14 +19,12 @@ trait Oauth
             'query' => $query,
         ];
 
-        $result = $this->request->httpGet($url, $options);
-
-        dd($result);
+        $response = $this->request->httpGet($url, $options);
 
         // if ($result->data->error_code != 0) {
         //     throw new ResponseException($result->data->description);
         // }
 
-        return $result;
+        return json_decode($response->getBody()->getContents(), true);
     }
 }

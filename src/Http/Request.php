@@ -56,17 +56,11 @@ class Request
      * @param array $options
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function request($url, $method = "GET", $options = []): Response
+    public function request($url, $method = "GET", $options = [], $returnRaw = false): Response
     {
         $method = strtoupper($method);
 
         return $this->baseClient()->request($method, $url, self::initOptions($options));
-
-        // if ($response->getStatusCode() === 200) {
-        //     $content = $response->getBody()->getContents();
-        // } else {
-        //     return false;
-        // }
     }
 
     /**
