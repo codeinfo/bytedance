@@ -29,14 +29,14 @@ class ServiceProvider extends LaravelServiceProvider implements LaravelDeferrabl
     public function boot()
     {
         $this->publishes([
-            __DIR__.'/../config/bytedance.php' => config_path('bytedance.php'),
+            __DIR__ . '/../config/bytedance.php' => config_path('bytedance.php'),
         ], 'config');
     }
 
     public function provides(): array
     {
         return [
-            BaseInterface::class  => 'bytedance.platform',
+            BaseInterface::class => 'bytedance.platform',
             WeappInterface::class => 'bytedance.weapp',
         ];
     }

@@ -2,8 +2,6 @@
 
 namespace Codeinfo\Bytedance\Traits\Platform;
 
-use Codeinfo\Bytedance\Http\Request;
-
 trait Oauth
 {
     public function getOauthToken($code, $grant_type = 'authorization_code')
@@ -14,17 +12,20 @@ trait Oauth
 
         $url = 'https://open.douyin.com/oauth/access_token/';
 
-        $query = 'client_key='.$client_key.'&client_secret='.$client_secret.'&code='.$code.'&grant_type='.$grant_type;
+        $query = 'client_key=' . $client_key . '&client_secret=' . $client_secret . '&code=' . $code . '&grant_type='
+            . $grant_type;
 
         $options = [
             'query' => $query,
         ];
 
-        $result = (new Request())->httpGet($url, 'GET', $options);
+        $result = $this->request->httpGet($url, $options);
 
-        if ($result->data->error_code != 0) {
-            throw new \Exception($result->data->description);
-        }
+        dd($result);
+
+        // if ($result->data->error_code != 0) {
+        //     throw new ResponseException($result->data->description);
+        // }
 
         return $result;
     }

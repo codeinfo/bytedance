@@ -3,45 +3,44 @@
 namespace Codeinfo\Bytedance\Http;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Handler\CurlHandler;
 use GuzzleHttp\HandlerStack;
-use Illuminate\Support\Facades\Log;
+use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\Psr7\Response;
+use InvalidArgumentException;
 
 class Request
 {
-    public $client;
-
     protected $timeout = 20.0;
 
     protected $verify;
 
-    public function __construct()
-    {
-        $this->initClient();
-    }
-
     /**
-     * init Client.
+     * 初始化Client
      *
-     * @return mixed
+     * @return \GuzzleHttp\Client
      */
-    protected function initClient()
+    protected function baseClient(): Client
     {
         $handler = new CurlHandler();
         $stack = HandlerStack::create($handler);
 
-        $this->client = new Client([
+        return new Client([
             'timeout' => $this->timeout,
-            'verify'  => $this->verify,
+            'verify' => $this->verify,
             'handler' => $stack,
         ]);
     }
 
-    protected static function initOptions($options)
+    /**
+     * init Options
+     *
+     * @param array $options
+     * @return array
+     */
+    protected static function initOptions($options): array
     {
         if (!is_array($options)) {
-            throw new \Exception('options must be array');
+            throw new InvalidArgumentException('options must be array');
         }
 
         return array_merge($options, [
@@ -50,71 +49,41 @@ class Request
     }
 
     /**
-     * 请求服务器.
+     * make request
      *
-     * @param [type] $url
+     * @param string $url
      * @param string $method
-     * @param array  $options
-     *
-     * @return mixed
+     * @param array $options
+     * @return \GuzzleHttp\Psr7\Response
      */
-    public function httpGet($url, $options = [])
+    public function request($url, $method = "GET", $options = []): Response
     {
-        try {
-            $response = $this->client->request('GET', $url, self::initOptions($options));
-        } catch (RequestException $e) {
-            // 写入日志
-            if ($e->hasResponse()) {
-                // 写入日志
-                Log::error('curlGuzzleHttp', [$e->getResponse()]);
-            }
-        }
+        $method = strtoupper($method);
 
-        if ($response->getStatusCode() === 200) {
-            $content = $response->getBody()->getContents();
-        } else {
-            return false;
-        }
+        return $this->baseClient()->request($method, $url, self::initOptions($options));
 
-        return json_decode($content);
+        // if ($response->getStatusCode() === 200) {
+        //     $content = $response->getBody()->getContents();
+        // } else {
+        //     return false;
+        // }
     }
 
     /**
-     * POST请求
+     * Undocumented function
      *
      * @param [type] $url
-     * @param array  $options
-     *
-     * @return void
+     * @param array $options
+     * @return Response
      */
-    public static function post($url, $options = [])
+    public function httpGet(string $url, array $query = [])
     {
-        $client = new Client([
-            // You can set any number of default request options.
-            'timeout' => 20.0,
-            'verify'  => false,
-        ]);
-
-        $options = array_merge($options, [
-            'debug' => false,
-        ]);
-
-        try {
-            $response = $client->request('POST', $url, $options);
-        } catch (RequestException $e) {
-            // 写入日志
-            if ($e->hasResponse()) {
-                // 写入日志
-                Log::channel('single')->info('curlGuzzleHttp', [$e->getResponse()]);
-            }
-        }
-
-        if ($response->getStatusCode() === 200) {
-            $content = $response->getBody()->getContents();
-        } else {
-            return false;
-        }
-
-        return $content;
+        return $this->request($url, 'GET', ['query' => $query]);
     }
+
+    public function httpPost(string $url, array $data = [])
+    {
+        return $this->request($url, 'POST', ['form_params' => $data]);
+    }
+
 }

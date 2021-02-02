@@ -4,6 +4,7 @@ namespace Codeinfo\Bytedance;
 
 use Codeinfo\Bytedance\Contracts\BaseInterface;
 use Codeinfo\Bytedance\Exceptions\ResponseExcetion;
+use Codeinfo\Bytedance\Http\Request;
 use Codeinfo\Bytedance\Traits\Platform\Oauth;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
@@ -39,6 +40,18 @@ class BaseService implements BaseInterface
      */
     protected $jsb_ticket;
 
+    /**
+     * Http request
+     *
+     * @void $client
+     */
+    protected $request;
+
+    /**
+     * 构造config
+     *
+     * @param [type] $config
+     */
     public function __construct($config)
     {
         $this->init($config);
@@ -51,6 +64,7 @@ class BaseService implements BaseInterface
     {
         $this->client_key = $config['client_key'];
         $this->client_secret = $config['client_secret'];
+        $this->request = new Request();
     }
 
     /**
@@ -64,16 +78,16 @@ class BaseService implements BaseInterface
     public function genrateUrl($scope, $redirect_uri)
     {
         $query = [
-            'client_key'    => $this->client_key,
+            'client_key' => $this->client_key,
             'response_type' => 'response_type',
-            'scope'         => $scope,
-            'redirect_uri'  => $redirect_uri,
+            'scope' => $scope,
+            'redirect_uri' => $redirect_uri,
         ];
 
         $url = 'https://open.douyin.com/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -89,17 +103,17 @@ class BaseService implements BaseInterface
     public function genrateBaseUrl($redirect_uri, $state = null)
     {
         $query = [
-            'client_key'    => $this->client_key,
+            'client_key' => $this->client_key,
             'response_type' => 'code',
-            'scope'         => 'login_id',
-            'state'         => $state ?? '',
-            'redirect_uri'  => $redirect_uri,
+            'scope' => 'login_id',
+            'state' => $state ?? '',
+            'redirect_uri' => $redirect_uri,
         ];
 
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -134,7 +148,7 @@ class BaseService implements BaseInterface
 
         $query = [
             'access_token' => $access_token,
-            'open_id'      => $open_id,
+            'open_id' => $open_id,
         ];
 
         $options = [
@@ -162,12 +176,12 @@ class BaseService implements BaseInterface
         $url = 'https://open.douyin.com/video/upload/';
 
         $options = [
-            'query'     => $query,
+            'query' => $query,
             'multipart' => [
                 [
-                    'name'     => 'video',
+                    'name' => 'video',
                     'contents' => fopen($video_path, 'r'),
-                    'headers'  => [
+                    'headers' => [
                         'Content-Type' => 'video/mp4',
                     ],
                 ],
@@ -201,7 +215,7 @@ class BaseService implements BaseInterface
 
         $options = [
             'query' => $query,
-            'json'  => $form_params,
+            'json' => $form_params,
         ];
 
         try {
@@ -212,7 +226,7 @@ class BaseService implements BaseInterface
 
         Log::info('videoCreate', [
             'form_params' => $form_params,
-            'res'         => $result,
+            'res' => $result,
         ]);
 
         return $result;
@@ -224,7 +238,7 @@ class BaseService implements BaseInterface
 
         $options = [
             'query' => $query,
-            'json'  => $form_params,
+            'json' => $form_params,
         ];
 
         try {
@@ -248,7 +262,7 @@ class BaseService implements BaseInterface
         $url = 'https://open.douyin.com//video/data/';
         $options = [
             'query' => $query,
-            'json'  => $form_params,
+            'json' => $form_params,
         ];
 
         try {
@@ -267,7 +281,7 @@ class BaseService implements BaseInterface
      */
     public function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix.'access_token', 7200, function () {
+        return Cache::remember($this->cachePrefix . 'access_token', 7200, function () {
             $res = $this->curlAccessToken();
 
             return $res->data->access_token;
@@ -284,9 +298,9 @@ class BaseService implements BaseInterface
         $url = 'https://open.douyin.com/oauth/client_token/';
 
         $query = [
-            'client_key'    => $this->client_key,
+            'client_key' => $this->client_key,
             'client_secret' => $this->client_secret,
-            'grant_type'    => 'client_credential',
+            'grant_type' => 'client_credential',
         ];
 
         $options = [
@@ -384,7 +398,7 @@ class BaseService implements BaseInterface
         $client = new Client([
             // You can set any number of default request options.
             'timeout' => 20.0,
-            'verify'  => false,
+            'verify' => false,
         ]);
 
         $options = array_merge($options, [
