@@ -1,6 +1,6 @@
 <?php
 
-namespace Codeinfo\Bytedance\Contracts;
+namespace ByteDanceLaravel\Kernel\Contracts;
 
 interface BaseInterface
 {

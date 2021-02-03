@@ -1,16 +1,20 @@
 <?php
 
-namespace Codeinfo\Bytedance\Traits\Platform;
+namespace ByteDanceLaravel\Platform\Oauth;
 
-trait Oauth
+class AccessToken
 {
-    public function getOauthToken($code, $grant_type = 'authorization_code')
+    protected $baseUri = 'https://open.douyin.com';
+
+    protected $endpoint = '/oauth/access_token/';
+
+    public function getAccessToken($code, $grant_type = 'authorization_code')
     {
         // 抖音初始化
         $client_key = $this->client_key; // string | 应用唯一标识
         $client_secret = $this->client_secret; // string | 应用唯一标识对应的密钥
 
-        $url = 'https://open.douyin.com/oauth/access_token/';
+        $url = $this->baseUri . $this->endpoint;
 
         $query = 'client_key=' . $client_key . '&client_secret=' . $client_secret . '&code=' . $code . '&grant_type='
             . $grant_type;

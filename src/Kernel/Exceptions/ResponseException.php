@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/bytedance.
+ * This file is part of the codeinfo/ByteDanceLaravel.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Codeinfo\Bytedance\Exceptions;
+namespace ByteDanceLaravel\Kernel\Exceptions;
 
 class ResponseException extends Exception
 {

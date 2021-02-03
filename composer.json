@@ -17,17 +17,7 @@
     },
     "autoload": {
       "psr-4": {
-          "Codeinfo\\Bytedance\\": "src/"
-      }
-    },
-    "extra": {
-      "laravel": {
-          "providers": [
-              "Codeinfo\\Bytedance\\ServiceProvider"
-          ],
-          "aliases": {
-              "EasyWeChat": "Codeinfo\\Bytedance\\Facade"
-          }
+          "ByteDanceLaravel\\": "src/"
       }
     }
 }
