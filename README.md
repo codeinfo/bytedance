@@ -1,5 +1,5 @@
 # 字节跳动扩展包
-
+[![StyleCI](https://github.styleci.io/repos/335143363/shield?branch=main)](https://github.styleci.io/repos/335143363?branch=main)
 ### 使用方法
 
         use ByteDanceLaravel\Factory;
