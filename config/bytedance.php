@@ -1,15 +1,17 @@
 <?php
 
 return [
+    // 抖音开放平台
+    'platform' => [
 
-    'client_key' => env('BYTE_CLIENT_KEY', ''),
-
-    'client_secret' => env('BYTE_CLIENT_SECRET', ''),
-    // 授权回调
-    'url' => env('BYTE_URL', ''),
-
-    'weapp' => [
-        'appid'  => env('BYTE_WEAPP_APPID', ''),
-        'secret' => env('BYTE_WEAPP_SECRET', ''),
+        'client_key' => env('BYTEDANCE_PLATFORM_CLIENT_KEY', ''),
+        'client_secret' => env('BYTEDANCE_PLATFORM_CLIENT_SECRET', ''),
+        // 授权回调
+        'url' => env('BYTE_URL', ''),
+    ],
+    // 小程序
+    'microapp' => [
+        'appid' => env('BYTEDANCE_MICROAPP_APPID', ''),
+        'secret' => env('BYTEDANCE_MICROAPP_SECRET', ''),
     ],
 ];

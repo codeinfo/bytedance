@@ -1,0 +1,101 @@
+<?php
+
+/**
+ * This file is part of the codeinfo/ByteDanceLaravel.
+ *
+ * (c) codeinfo <nanye@codeinfo.cn>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace ByteDanceLaravel\Microapp\Auth;
+
+use ByteDanceLaravel\Kernel\Client;
+use ByteDanceLaravel\Kernel\Exceptions\InvalidArgumentException;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Cache;
+
+class AccessToken extends Client
+{
+    protected $baseUri = 'https://developer.toutiao.com/api';
+
+    protected $cachePrefix = 'ByteWeapp-';
+
+    protected $access_token;
+
+    public function __construct($app)
+    {
+        parent::__construct($app);
+        $this->access_token = $this->getAccessToken();
+    }
+
+    /**
+     * 获取 access_token
+     *
+     * @return string
+     */
+    private function getAccessToken()
+    {
+        return Cache::remember($this->cachePrefix . 'access_token', 7200, function () {
+            $enpoint = '/apps/token';
+
+            $query = array_merge($this->app['config'], [
+                'grant_type' => 'client_credential',
+            ]);
+
+            $response = $this->httpGet($this->baseUri . $enpoint, $query);
+            $result = json_decode($response->getBody()->getContents(), true);
+            return $result['access_token'];
+        });
+    }
+
+    /**
+     * 登陆
+     *
+     * @param string $code
+     * @param string $anonymous_code 匿名
+     * @return void
+     */
+    public function code2Session($data)
+    {
+        $enpoint = '/apps/jscode2session';
+
+        $query = array_merge($this->app['config'], [
+            'grant_type' => 'client_credential',
+        ]);
+
+        if (Arr::has($data, 'code') || Arr::has($data, 'anonymous_code')) {
+            $query = array_merge($query, $data);
+        } else {
+            throw new InvalidArgumentException('code 和 anonymous_code 至少要有一个');
+        }
+
+        $response = $this->httpGet($this->baseUri . $enpoint, $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 创建二维码
+     *
+     * @param Array $form_params
+     * @return mixed
+     */
+    public function createQRCode(string $path)
+    {
+        $enpoint = '/apps/qrcode';
+
+        $options = [
+            'json' => [
+                'access_token' => $this->access_token,
+                'appname' => 'douyin',
+                'path' => $path,
+            ],
+        ];
+
+        $response = $this->httpPost($this->baseUri . $enpoint, $options);
+
+        return $response->getBody()->getContents();
+    }
+}

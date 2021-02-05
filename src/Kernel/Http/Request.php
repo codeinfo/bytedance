@@ -21,7 +21,7 @@ class Request
 {
     protected $timeout = 20.0;
 
-    protected $verify;
+    protected $verify = false;
 
     public function __construct()
     {

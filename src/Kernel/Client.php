@@ -59,4 +59,19 @@ class Client extends Request
         return $this->request($url, 'POST', ['form_params' => $data]);
     }
 
+    /**
+     * 解析跳转链接响应数据
+     *
+     * @param string $url
+     * @return mixed
+     */
+    public function httpGetRedirect(string $url)
+    {
+        return $this->request($url, 'GET', [
+            'allow_redirects' => [
+                'track_redirects' => true,
+            ],
+        ]);
+    }
+
 }

@@ -58,19 +58,10 @@ class Account extends Client
      */
     public function getDouyinUid(string $url)
     {
-        // 发起请求查询实际用户主页ID
-        $options = [
-            'allow_redirects' => [
-                'track_redirects' => true,
-            ],
-        ];
-
-        $response = $this->httpGet($url, $options);
+        $response = $this->httpGetRedirect($url);
 
         $redrict_url = $response->getHeaderLine('X-Guzzle-Redirect-History');
 
-        dd($redrict_url);
-        // 解析地址
         return explode('/', parse_url($redrict_url)['path'])[3];
     }
 }
