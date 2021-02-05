@@ -23,6 +23,10 @@ class Request
 
     protected $verify;
 
+    public function __construct()
+    {
+    }
+
     /**
      * 初始化Client
      *
@@ -70,23 +74,6 @@ class Request
         $method = strtoupper($method);
 
         return $this->baseClient()->request($method, $url, self::initOptions($options));
-    }
-
-    /**
-     * Undocumented function
-     *
-     * @param [type] $url
-     * @param array $options
-     * @return Response
-     */
-    public function httpGet(string $url, array $query = [])
-    {
-        return $this->request($url, 'GET', ['query' => $query]);
-    }
-
-    public function httpPost(string $url, array $data = [])
-    {
-        return $this->request($url, 'POST', ['form_params' => $data]);
     }
 
 }

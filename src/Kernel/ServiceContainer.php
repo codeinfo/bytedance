@@ -12,7 +12,6 @@
 namespace ByteDanceLaravel\Kernel;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Config;
 
 class ServiceContainer extends Container
 {
@@ -20,7 +19,7 @@ class ServiceContainer extends Container
     public function __construct($config)
     {
         $this['config'] = function () use ($config) {
-            return new Config($config);
+            return $config;
         };
 
         //register the provider

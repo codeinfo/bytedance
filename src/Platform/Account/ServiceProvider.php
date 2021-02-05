@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Platform\Oauth;
+namespace ByteDanceLaravel\Platform\Account;
 
 use ByteDanceLaravel\Kernel\Contracts\ServiceProviderInterface;
 use Illuminate\Container\Container;
@@ -21,8 +21,8 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $app)
     {
-        $app['oauth'] = function ($app) {
-            return new Oauth($app);
+        $app['account'] = function ($app) {
+            return new Account($app);
         };
     }
 }
