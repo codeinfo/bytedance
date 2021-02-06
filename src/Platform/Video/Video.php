@@ -26,22 +26,9 @@ class Video extends Client
      */
     public function upload(array $query, string $video_path)
     {
-        $options = [
-            'query' => $query,
-            'multipart' => [
-                [
-                    'name' => 'video',
-                    'contents' => fopen($video_path, 'r'),
-                    'headers' => [
-                        'Content-Type' => 'video/mp4',
-                    ],
-                ],
-            ],
-        ];
-
         $endpoint = '/video/upload/';
 
-        $response = $this->httpPost($this->baseUri . $endpoint, $options);
+        $response = $this->httpPostUpload($this->baseUri . $endpoint, $query, $video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }

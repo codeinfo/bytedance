@@ -31,26 +31,6 @@ class AccessToken extends Client
     }
 
     /**
-     * 获取 access_token
-     *
-     * @return string
-     */
-    private function getAccessToken()
-    {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, function () {
-            $enpoint = '/apps/token';
-
-            $query = array_merge($this->app['config'], [
-                'grant_type' => 'client_credential',
-            ]);
-
-            $response = $this->httpGet($this->baseUri . $enpoint, $query);
-            $result = json_decode($response->getBody()->getContents(), true);
-            return $result['access_token'];
-        });
-    }
-
-    /**
      * 登陆
      *
      * @param string $code
@@ -80,22 +60,51 @@ class AccessToken extends Client
      * 创建二维码
      *
      * @param Array $form_params
-     * @return mixed
+     * @return stream 图片流
      */
     public function createQRCode(string $path)
     {
         $enpoint = '/apps/qrcode';
 
-        $options = [
-            'json' => [
-                'access_token' => $this->access_token,
-                'appname' => 'douyin',
-                'path' => $path,
-            ],
+        $json = [
+            'access_token' => $this->access_token,
+            'appname' => 'douyin',
+            'path' => $path,
         ];
 
-        $response = $this->httpPost($this->baseUri . $enpoint, $options);
+        $response = $this->httpPostJson($this->baseUri . $enpoint, [], $json);
 
         return $response->getBody()->getContents();
+    }
+
+    /**
+     * 获取 access_token
+     *
+     * @return string
+     */
+    private function getAccessToken()
+    {
+        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
+    }
+
+    /**
+     * 获取token
+     *
+     * @return \Closure
+     */
+    private function getToken(): \Closure
+    {
+        return function () {
+            $enpoint = '/apps/token';
+
+            $query = array_merge($this->app['config'], [
+                'grant_type' => 'client_credential',
+            ]);
+
+            $response = $this->httpGet($this->baseUri . $enpoint, $query);
+            $result = json_decode($response->getBody()->getContents(), true);
+
+            return $result['access_token'];
+        };
     }
 }

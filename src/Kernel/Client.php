@@ -54,9 +54,9 @@ class Client extends Request
      * @param array $data
      * @return mixed
      */
-    public function httpPost(string $url, array $data = [])
+    public function httpPostJson(string $url, array $query = [], array $json = [])
     {
-        return $this->request($url, 'POST', ['form_params' => $data]);
+        return $this->request($url, 'POST', ['json' => $json]);
     }
 
     /**
@@ -72,6 +72,24 @@ class Client extends Request
                 'track_redirects' => true,
             ],
         ]);
+    }
+
+    public function httpPostUpload($url, array $query, string $video_path)
+    {
+        $options = [
+            'query' => $query,
+            'multipart' => [
+                [
+                    'name' => 'video',
+                    'contents' => fopen($video_path, 'r'),
+                    'headers' => [
+                        'Content-Type' => 'video/mp4',
+                    ],
+                ],
+            ],
+        ];
+
+        return $this->request($url, 'POST', $options);
     }
 
 }
