@@ -15,7 +15,6 @@ use Illuminate\Container\Container;
 
 class ServiceContainer extends Container
 {
-
     public function __construct($config)
     {
         $this['config'] = function () use ($config) {

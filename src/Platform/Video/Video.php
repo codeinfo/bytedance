@@ -18,7 +18,7 @@ class Video extends Client
     protected $baseUri = 'https://open.douyin.com';
 
     /**
-     * 上传视频
+     * 上传视频.
      *
      * @param string $query
      * @param string $video_path
@@ -28,13 +28,13 @@ class Video extends Client
     {
         $endpoint = '/video/upload/';
 
-        $response = $this->httpPostUpload($this->baseUri . $endpoint, $query, $video_path);
+        $response = $this->httpPostUpload($this->baseUri.$endpoint, $query, $video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
-     * 创建视频
+     * 创建视频.
      *
      * @param [type] $query
      * @param [type] $form_params
@@ -51,7 +51,7 @@ class Video extends Client
     }
 
     /**
-     * 评论视频
+     * 评论视频.
      *
      * @param array $query
      * @param string $form_params
@@ -66,13 +66,13 @@ class Video extends Client
             'json' => $form_params,
         ];
 
-        $response = $this->httpPost($this->baseUri . $endpoint, $options);
+        $response = $this->httpPost($this->baseUri.$endpoint, $options);
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
-     * 查询视频信息
+     * 查询视频信息.
      *
      * @param array $query
      * @return json
@@ -86,7 +86,7 @@ class Video extends Client
             'json' => $form_params,
         ];
 
-        $response = $this->httpPost($this->baseUri . $endpoint, $options);
+        $response = $this->httpPost($this->baseUri.$endpoint, $options);
 
         return json_decode($response->getBody()->getContents(), true);
     }

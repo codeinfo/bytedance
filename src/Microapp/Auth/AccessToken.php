@@ -31,7 +31,7 @@ class AccessToken extends Client
     }
 
     /**
-     * 登陆
+     * 登陆.
      *
      * @param string $code
      * @param string $anonymous_code 匿名
@@ -51,7 +51,7 @@ class AccessToken extends Client
             throw new InvalidArgumentException('code 和 anonymous_code 至少要有一个');
         }
 
-        $response = $this->httpGet($this->baseUri . $enpoint, $query);
+        $response = $this->httpGet($this->baseUri.$enpoint, $query);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -59,7 +59,7 @@ class AccessToken extends Client
     /**
      * 创建二维码
      *
-     * @param Array $form_params
+     * @param array $form_params
      * @return stream 图片流
      */
     public function createQRCode(string $path)
@@ -72,23 +72,23 @@ class AccessToken extends Client
             'path' => $path,
         ];
 
-        $response = $this->httpPostJson($this->baseUri . $enpoint, [], $json);
+        $response = $this->httpPostJson($this->baseUri.$enpoint, [], $json);
 
         return $response->getBody()->getContents();
     }
 
     /**
-     * 获取 access_token
+     * 获取 access_token.
      *
      * @return string
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
+        return Cache::remember($this->cachePrefix.'access_token', 7200, $this->getToken());
     }
 
     /**
-     * 获取token
+     * 获取token.
      *
      * @return \Closure
      */
@@ -101,7 +101,7 @@ class AccessToken extends Client
                 'grant_type' => 'client_credential',
             ]);
 
-            $response = $this->httpGet($this->baseUri . $enpoint, $query);
+            $response = $this->httpGet($this->baseUri.$enpoint, $query);
             $result = json_decode($response->getBody()->getContents(), true);
 
             return $result['access_token'];
