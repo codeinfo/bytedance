@@ -1,6 +1,7 @@
 {
     "name": "codeinfo/bytedance-for-laravel",
     "description": "bytedance api",
+    "license": "MIT",
     "authors": [
       {
         "name": "nanye",
