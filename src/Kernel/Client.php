@@ -16,7 +16,7 @@ use ByteDanceLaravel\Kernel\Http\Request;
 class Client extends Request
 {
     /**
-     * 服务容器
+     * 服务容器.
      *
      * @var \ByteDanceLaravel\Kernel\ServiceContainer
      */
@@ -32,7 +32,6 @@ class Client extends Request
         parent::__construct();
 
         $this->app = $app;
-
     }
 
     /**
@@ -48,7 +47,7 @@ class Client extends Request
     }
 
     /**
-     * Undocumented function
+     * Undocumented function.
      *
      * @param string $url
      * @param array $data
@@ -60,7 +59,7 @@ class Client extends Request
     }
 
     /**
-     * 解析跳转链接响应数据
+     * 解析跳转链接响应数据.
      *
      * @param string $url
      * @return mixed
@@ -91,5 +90,4 @@ class Client extends Request
 
         return $this->request($url, 'POST', $options);
     }
-
 }

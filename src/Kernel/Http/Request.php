@@ -12,8 +12,8 @@
 namespace ByteDanceLaravel\Kernel\Http;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 
@@ -28,7 +28,7 @@ class Request
     }
 
     /**
-     * 初始化Client
+     * 初始化Client.
      *
      * @return \GuzzleHttp\Client
      */
@@ -45,14 +45,14 @@ class Request
     }
 
     /**
-     * init Options
+     * init Options.
      *
      * @param array $options
      * @return array
      */
     protected static function initOptions($options): array
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             throw new InvalidArgumentException('options must be array');
         }
 
@@ -62,18 +62,17 @@ class Request
     }
 
     /**
-     * make request
+     * make request.
      *
      * @param string $url
      * @param string $method
      * @param array $options
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function request($url, $method = "GET", $options = [], $returnRaw = false): Response
+    public function request($url, $method = 'GET', $options = [], $returnRaw = false): Response
     {
         $method = strtoupper($method);
 
         return $this->baseClient()->request($method, $url, self::initOptions($options));
     }
-
 }
