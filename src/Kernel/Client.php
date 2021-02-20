@@ -36,7 +36,7 @@ class Client extends Request
     }
 
     /**
-     * Client constructor.
+     * Http Get
      *
      * @param string $url
      * @param array $query
@@ -48,7 +48,7 @@ class Client extends Request
     }
 
     /**
-     * Undocumented function
+     * Http Post Json.
      *
      * @param string $url
      * @param array $data
@@ -56,11 +56,14 @@ class Client extends Request
      */
     public function httpPostJson(string $url, array $query = [], array $json = [])
     {
-        return $this->request($url, 'POST', ['json' => $json]);
+        return $this->request($url, 'POST', [
+            'query' => $query,
+            'json' => $json,
+        ]);
     }
 
     /**
-     * 解析跳转链接响应数据
+     * Http get redirect.
      *
      * @param string $url
      * @return mixed
