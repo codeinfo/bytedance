@@ -11,7 +11,7 @@
 
 namespace Codeinfo\LaravelBytedance\Microapp;
 
-use ByteDanceLaravel\Kernel\ServiceContainer;
+use Codeinfo\LaravelBytedance\Kernel\ServiceContainer;
 
 class Application extends ServiceContainer
 {

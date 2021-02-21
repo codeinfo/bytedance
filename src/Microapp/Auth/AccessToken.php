@@ -11,8 +11,8 @@
 
 namespace Codeinfo\LaravelBytedance\Microapp\Auth;
 
-use ByteDanceLaravel\Kernel\Client;
-use ByteDanceLaravel\Kernel\Exceptions\InvalidArgumentException;
+use Codeinfo\LaravelBytedance\Kernel\Client;
+use Codeinfo\LaravelBytedance\Kernel\Exceptions\InvalidArgumentException;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 

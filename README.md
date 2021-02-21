@@ -7,7 +7,7 @@
 
 ## 使用方法
 
-        use ByteDanceLaravel\Factory;
+        use Codeinfo\ByteDanceLaravel\Factory;
 
         $app = Factory::platform(config('bytedance.platform'));
 
