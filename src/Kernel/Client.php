@@ -77,7 +77,7 @@ class Client extends Request
     }
 
     /**
-     * Http Post Upload video for mp4
+     * Http Post Upload video for mp4.
      *
      * @param string $url
      * @param array $query
