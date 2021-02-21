@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Platform\Oauth;
+namespace Codeinfo\LaravelBytedance\Platform\Oauth;
 
-use ByteDanceLaravel\Kernel\Client;
+use Codeinfo\LaravelBytedance\Kernel\Client;
 
 class Oauth extends Client
 {
@@ -33,10 +33,10 @@ class Oauth extends Client
             'redirect_uri' => $redirect_uri,
         ];
 
-        $url = $this->baseUri.'/platform/oauth/connect/?';
+        $url = $this->baseUri . '/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -61,7 +61,7 @@ class Oauth extends Client
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;

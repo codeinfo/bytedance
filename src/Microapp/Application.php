@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Microapp;
+namespace Codeinfo\LaravelBytedance\Microapp;
 
 use ByteDanceLaravel\Kernel\ServiceContainer;
 

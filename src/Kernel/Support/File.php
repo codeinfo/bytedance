@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Byte\Kernel\Support;
+namespace Codeinfo\LaravelBytedance\Kernel\Support;
 
 /**
  * Class File.

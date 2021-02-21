@@ -1,5 +1,5 @@
 {
-    "name": "codeinfo/bytedance-for-laravel",
+    "name": "codeinfo/laravel-bytedance",
     "description": "bytedance api",
     "license": "MIT",
     "authors": [
@@ -18,7 +18,14 @@
     },
     "autoload": {
       "psr-4": {
-          "ByteDanceLaravel\\": "src/"
+        "Codeinfo\\LaravelBytedance\\": "src/"
+      }
+    },
+    "extra": {
+      "laravel": {
+        "providers": [
+            "Codeinfo\\LaravelBytedance\\ServiceProvider"
+        ]
       }
     }
 }

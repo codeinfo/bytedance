@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Platform\Oauth;
+namespace Codeinfo\LaravelBytedance\Platform\Oauth;
 
-use ByteDanceLaravel\Kernel\Contracts\ServiceProviderInterface;
+use Codeinfo\LaravelBytedance\Kernel\Contracts\ServiceProviderInterface;
 use Illuminate\Container\Container;
 
 class ServiceProvider implements ServiceProviderInterface

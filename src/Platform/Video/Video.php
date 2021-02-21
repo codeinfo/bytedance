@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,9 +9,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Platform\Video;
+namespace Codeinfo\LaravelBytedance\Platform\Video;
 
-use ByteDanceLaravel\Kernel\Client;
+use Codeinfo\LaravelBytedance\Kernel\Client;
 
 class Video extends Client
 {
@@ -75,7 +75,7 @@ class Video extends Client
             'content' => $content,
         ];
 
-        if (! empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
+        if (!empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
             array_merge($form_params, [
                 'comment_id' => $comment_id,
             ]);

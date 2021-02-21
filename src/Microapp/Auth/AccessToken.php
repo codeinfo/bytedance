@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,7 +9,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Microapp\Auth;
+namespace Codeinfo\LaravelBytedance\Microapp\Auth;
 
 use ByteDanceLaravel\Kernel\Client;
 use ByteDanceLaravel\Kernel\Exceptions\InvalidArgumentException;
@@ -80,7 +80,7 @@ class AccessToken extends Client
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix.'access_token', 7200, $this->getToken());
+        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
     }
 
     /**

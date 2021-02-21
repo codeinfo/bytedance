@@ -1,22 +1,22 @@
 <?php
 
-/*
- * This file is part of the overtrue/wechat.
+/**
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
- * (c) overtrue <i@overtrue.me>
+ * (c) codeinfo <nanye@codeinfo.cn>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel;
+namespace Codeinfo\LaravelBytedance;
 
 use Illuminate\Support\Str;
 
 /**
  * Class Factory.
  *
- * @method static \ByteDanceLaravel\Platform\Application            platform(array $config)
+ * @method static Codeinfo\LaravelBytedance\Platform\Application            platform(array $config)
  */
 class Factory
 {
@@ -24,12 +24,12 @@ class Factory
      * @param string $name
      * @param array  $config
      *
-     * @return \ByteDanceLaravel\Kernel\ServiceContainer
+     * @return Codeinfo\LaravelBytedance\Kernel\ServiceContainer
      */
     public static function make($name, array $config)
     {
         $namespace = Str::studly($name);
-        $application = "\\ByteDanceLaravel\\{$namespace}\\Application";
+        $application = "\\Codeinfo\\LaravelBytedance\\{$namespace}\\Application";
 
         return new $application($config);
     }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This file is part of the codeinfo/ByteDanceLaravel.
+ * This file is part of the Codeinfo\LaravelBytedance.
  *
  * (c) codeinfo <nanye@codeinfo.cn>
  *
@@ -9,23 +9,23 @@
  * with this source code in the file LICENSE.
  */
 
-namespace ByteDanceLaravel\Kernel;
+namespace Codeinfo\LaravelBytedance\Kernel;
 
-use ByteDanceLaravel\Kernel\Http\Request;
+use Codeinfo\LaravelBytedance\Kernel\Http\Request;
 
 class Client extends Request
 {
     /**
      * ServiceContainer.
      *
-     * @var \ByteDanceLaravel\Kernel\ServiceContainer
+     * @var \Codeinfo\LaravelBytedance\Kernel\ServiceContainer
      */
     protected $app;
 
     /**
      * Client constructor.
      *
-     * @param \ByteDanceLaravel\Kernel\ServiceContainer $app
+     * @param \Codeinfo\LaravelBytedance\Kernel\ServiceContainer $app
      */
     public function __construct(ServiceContainer $app)
     {
