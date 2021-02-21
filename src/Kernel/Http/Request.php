@@ -20,15 +20,21 @@ use InvalidArgumentException;
 class Request
 {
     protected $timeout = 20.0;
-
+    /**
+     * @var boolean
+     */
     protected $verify = false;
+    /**
+     * @var string
+     */
+    protected $baseUri;
 
     public function __construct()
     {
     }
 
     /**
-     * 初始化Client
+     * 初始化Client.
      *
      * @return \GuzzleHttp\Client
      */
@@ -45,7 +51,7 @@ class Request
     }
 
     /**
-     * init Options
+     * init Options.
      *
      * @param array $options
      * @return array
@@ -62,18 +68,21 @@ class Request
     }
 
     /**
-     * make request
+     * make request.
      *
      * @param string $url
      * @param string $method
      * @param array $options
      * @return \GuzzleHttp\Psr7\Response
      */
-    public function request($url, $method = "GET", $options = [], $returnRaw = false): Response
+    public function request($url, $method = 'GET', $options = [], $returnRaw = false): Response
     {
         $method = strtoupper($method);
 
+        if (property_exists($this, 'baseUri') && !is_null($this->baseUri)) {
+            $options['base_uri'] = $this->baseUri;
+        }
+
         return $this->baseClient()->request($method, $url, self::initOptions($options));
     }
-
 }

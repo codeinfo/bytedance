@@ -16,7 +16,7 @@ use ByteDanceLaravel\Kernel\Http\Request;
 class Client extends Request
 {
     /**
-     * 服务容器
+     * ServiceContainer.
      *
      * @var \ByteDanceLaravel\Kernel\ServiceContainer
      */
@@ -32,11 +32,10 @@ class Client extends Request
         parent::__construct();
 
         $this->app = $app;
-
     }
 
     /**
-     * Http Get
+     * Http Get.
      *
      * @param string $url
      * @param array $query
@@ -77,6 +76,14 @@ class Client extends Request
         ]);
     }
 
+    /**
+     * Http Post Upload video for mp4
+     *
+     * @param string $url
+     * @param array $query
+     * @param string $video_path
+     * @return mixed
+     */
     public function httpPostUpload($url, array $query, string $video_path)
     {
         $options = [
@@ -94,5 +101,4 @@ class Client extends Request
 
         return $this->request($url, 'POST', $options);
     }
-
 }

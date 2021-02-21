@@ -18,7 +18,7 @@ class Account extends Client
     protected $baseUri = 'https://open.douyin.com';
 
     /**
-     * 获取用户信息
+     * 获取用户信息.
      *
      * @param string $open_id
      * @param string $access_token token每个用户一个
@@ -26,33 +26,32 @@ class Account extends Client
      */
     public function userInfo(string $open_id, string $access_token)
     {
-        $url = $this->baseUri . '/oauth/userinfo/';
-
         $query = [
             'access_token' => $access_token,
             'open_id' => $open_id,
         ];
 
-        $response = $this->httpGet($url, $query);
+        $response = $this->httpGet('/oauth/userinfo/', $query);
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
-     * 解密手机号
+     * 解密手机号.
      *
      * @param string $string
      * @return string
      */
-    public function decryptMobile($string)
+    public function decryptMobile(string $string)
     {
         $key = $this->app['config']['client_key'];
         $iv = substr($key, 0, 16);
+
         return openssl_decrypt(base64_decode($string), 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
     }
 
     /**
-     * 解析抖音主页
+     * 解析抖音主页.
      *
      * @return void
      */

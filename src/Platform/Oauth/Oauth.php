@@ -68,15 +68,13 @@ class Oauth extends Client
     }
 
     /**
-     * 获取用户授权token
+     * 获取用户授权token.
      *
      * @param string $code
      * @return array
      */
     public function getAccessToken(string $code)
     {
-        $url = $this->baseUri . '/oauth/access_token/';
-
         $query = [
             'client_key' => $this->app['config']['client_key'],
             'client_secret' => $this->app['config']['client_secret'],
@@ -84,9 +82,8 @@ class Oauth extends Client
             'grant_type' => 'authorization_code',
         ];
 
-        $response = $this->httpGet($url, $query);
+        $response = $this->httpGet('/oauth/access_token/', $query);
 
         return json_decode($response->getBody()->getContents(), true);
     }
-
 }

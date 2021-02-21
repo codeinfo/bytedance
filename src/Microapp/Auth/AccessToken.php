@@ -31,7 +31,7 @@ class AccessToken extends Client
     }
 
     /**
-     * 登陆
+     * 登陆.
      *
      * @param string $code
      * @param string $anonymous_code 匿名
@@ -39,8 +39,6 @@ class AccessToken extends Client
      */
     public function code2Session($data)
     {
-        $enpoint = '/apps/jscode2session';
-
         $query = array_merge($this->app['config'], [
             'grant_type' => 'client_credential',
         ]);
@@ -51,7 +49,7 @@ class AccessToken extends Client
             throw new InvalidArgumentException('code 和 anonymous_code 至少要有一个');
         }
 
-        $response = $this->httpGet($this->baseUri . $enpoint, $query);
+        $response = $this->httpGet('/apps/jscode2session', $query);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -59,26 +57,24 @@ class AccessToken extends Client
     /**
      * 创建二维码
      *
-     * @param Array $form_params
+     * @param array $form_params
      * @return stream 图片流
      */
     public function createQRCode(string $path)
     {
-        $enpoint = '/apps/qrcode';
-
         $json = [
             'access_token' => $this->access_token,
             'appname' => 'douyin',
             'path' => $path,
         ];
 
-        $response = $this->httpPostJson($this->baseUri . $enpoint, [], $json);
+        $response = $this->httpPostJson('/apps/qrcode', [], $json);
 
         return $response->getBody()->getContents();
     }
 
     /**
-     * 获取 access_token
+     * 获取 access_token.
      *
      * @return string
      */
@@ -88,20 +84,19 @@ class AccessToken extends Client
     }
 
     /**
-     * 获取token
+     * 获取token.
      *
      * @return \Closure
      */
     private function getToken(): \Closure
     {
         return function () {
-            $enpoint = '/apps/token';
 
             $query = array_merge($this->app['config'], [
                 'grant_type' => 'client_credential',
             ]);
 
-            $response = $this->httpGet($this->baseUri . $enpoint, $query);
+            $response = $this->httpGet('/apps/token', $query);
             $result = json_decode($response->getBody()->getContents(), true);
 
             return $result['access_token'];

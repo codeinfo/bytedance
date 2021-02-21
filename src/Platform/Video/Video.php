@@ -18,75 +18,94 @@ class Video extends Client
     protected $baseUri = 'https://open.douyin.com';
 
     /**
-     * 上传视频
+     * Upload Video.
      *
-     * @param string $query
+     * @param string $open_id
+     * @param string $access_token
      * @param string $video_path
-     * @return mixed
+     * @return array
      */
-    public function upload(array $query, string $video_path)
+    public function upload(string $open_id, string $access_token, string $video_path)
     {
-        $endpoint = '/video/upload/';
-
-        $response = $this->httpPostUpload($this->baseUri . $endpoint, $query, $video_path);
+        $response = $this->httpPostUpload('/video/upload/', [
+            'open_id' => $open_id,
+            'access_token' => $access_token,
+        ], $video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
-     * 创建视频
+     * Video Create.
      *
-     * @param [type] $query
-     * @param [type] $form_params
+     * @param string $open_id
+     * @param string $access_token
+     * @param array $form_params
      * @return array
      */
-    public function videoCreate(array $query, array $form_params)
+    public function create(string $open_id, string $access_token, array $form_params)
     {
-        $endpoint = '/video/create/';
-
-        $options = [
-            'query' => $query,
-            'json' => $form_params,
-        ];
-    }
-
-    /**
-     * 评论视频
-     *
-     * @param array $query
-     * @param string $form_params
-     * @return array
-     */
-    public function videoComment(array $query, string $form_params)
-    {
-        $endpoint = '/item/comment/reply/';
-
-        $options = [
-            'query' => $query,
-            'json' => $form_params,
-        ];
-
-        $response = $this->httpPost($this->baseUri . $endpoint, $options);
+        $response = $this->httpPostJson('/video/create/', [
+            'open_id' => $open_id,
+            'access_token' => $access_token,
+        ], $form_params);
 
         return json_decode($response->getBody()->getContents(), true);
     }
 
     /**
-     * 查询视频信息
+     * Video Comment.
      *
-     * @param array $query
-     * @return json
+     * @param string $open_id
+     * @param string $access_token
+     * @param string $content
+     * @param string $item_id
+     * @param string $comment_id
+     * @return array
      */
-    public function queryVideoData(array $query, string $form_params)
-    {
-        $endpoint = '/video/data/';
+    public function comment(
+        string $open_id,
+        string $access_token,
+        string $content,
+        string $item_id,
+        string $comment_id = ''
+    ) {
 
-        $options = [
-            'query' => $query,
-            'json' => $form_params,
+        $form_params = [
+            'item_id' => $item_id,
+            'content' => $content,
         ];
 
-        $response = $this->httpPost($this->baseUri . $endpoint, $options);
+        if (!empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
+            array_merge($form_params, [
+                'comment_id' => $comment_id,
+            ]);
+        }
+
+        $response = $this->httpPostJson('/item/comment/reply/', [
+            'open_id' => $open_id,
+            'access_token' => $access_token,
+        ], $form_params);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * Query Video Information.
+     *
+     * @param string $open_id
+     * @param string $access_token
+     * @param array $item_ids
+     * @return array
+     */
+    public function data(string $open_id, string $access_token, array $item_ids)
+    {
+        $response = $this->httpPostJson('/video/data/', [
+            'open_id' => $open_id,
+            'access_token' => $access_token,
+        ], [
+            'item_ids' => $item_ids,
+        ]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
