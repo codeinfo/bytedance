@@ -80,7 +80,7 @@ class AccessToken extends Client
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
+        return Cache::remember($this->cachePrefix.'access_token', 7200, $this->getToken());
     }
 
     /**
@@ -91,7 +91,6 @@ class AccessToken extends Client
     private function getToken(): \Closure
     {
         return function () {
-
             $query = array_merge($this->app['config'], [
                 'grant_type' => 'client_credential',
             ]);

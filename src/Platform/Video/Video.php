@@ -70,13 +70,12 @@ class Video extends Client
         string $item_id,
         string $comment_id = ''
     ) {
-
         $form_params = [
             'item_id' => $item_id,
             'content' => $content,
         ];
 
-        if (!empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
+        if (! empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
             array_merge($form_params, [
                 'comment_id' => $comment_id,
             ]);
