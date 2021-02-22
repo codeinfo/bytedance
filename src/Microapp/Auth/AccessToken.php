@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Cache;
 
 class AccessToken extends Client
 {
-    protected $baseUri = 'https://developer.toutiao.com/api';
+    protected $baseUri = 'https://developer.toutiao.com';
 
     protected $cachePrefix = 'ByteWeapp-';
 
@@ -49,7 +49,7 @@ class AccessToken extends Client
             throw new InvalidArgumentException('code 和 anonymous_code 至少要有一个');
         }
 
-        $response = $this->httpGet('/apps/jscode2session', $query);
+        $response = $this->httpGet('/api/apps/jscode2session', $query);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -68,7 +68,7 @@ class AccessToken extends Client
             'path' => $path,
         ];
 
-        $response = $this->httpPostJson('/apps/qrcode', [], $json);
+        $response = $this->httpPostJson('/api/apps/qrcode', [], $json);
 
         return $response->getBody()->getContents();
     }
@@ -95,7 +95,7 @@ class AccessToken extends Client
                 'grant_type' => 'client_credential',
             ]);
 
-            $response = $this->httpGet('/apps/token', $query);
+            $response = $this->httpGet('/api/apps/token', $query);
             $result = json_decode($response->getBody()->getContents(), true);
 
             return $result['access_token'];
