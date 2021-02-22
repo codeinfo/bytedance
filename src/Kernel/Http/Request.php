@@ -12,8 +12,8 @@
 namespace Codeinfo\LaravelBytedance\Kernel\Http;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Handler\CurlHandler;
+use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Psr7\Response;
 use InvalidArgumentException;
 
@@ -58,7 +58,7 @@ class Request
      */
     protected static function initOptions($options): array
     {
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             throw new InvalidArgumentException('options must be array');
         }
 
@@ -79,7 +79,7 @@ class Request
     {
         $method = strtoupper($method);
 
-        if (property_exists($this, 'baseUri') && !is_null($this->baseUri)) {
+        if (property_exists($this, 'baseUri') && ! is_null($this->baseUri)) {
             $options['base_uri'] = $this->baseUri;
         }
 

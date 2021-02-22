@@ -80,7 +80,7 @@ class AccessToken extends Client
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
+        return Cache::remember($this->cachePrefix.'access_token', 7200, $this->getToken());
     }
 
     /**
