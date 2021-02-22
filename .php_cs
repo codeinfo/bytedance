@@ -31,7 +31,7 @@ return PhpCsFixer\Config::create()
         'short_scalar_cast' => true,
         'single_blank_line_before_namespace' => true,
         'single_trait_insert_per_statement' => true,
-        'ternary_operator_spaces' => true,
+        'ternary_operator_spaces' => true,  //标准化三元运算的格式
         'unary_operator_spaces' => true,
         'visibility_required' => [
             'elements' => [
@@ -40,6 +40,8 @@ return PhpCsFixer\Config::create()
                 'property',
             ],
         ],
+        'array_indentation' => true,  //数组的每个元素必须缩进一次
+        'psr4' => true,
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()
