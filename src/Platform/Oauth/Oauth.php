@@ -28,15 +28,15 @@ class Oauth extends Client
     {
         $query = [
             'client_key' => $this->app['config']['client_key'],
-            'response_type' => 'response_type',
+            'response_type' => 'code',
             'scope' => $scope,
             'redirect_uri' => $redirect_uri,
         ];
 
-        $url = $this->baseUri.'/platform/oauth/connect/?';
+        $url = $this->baseUri . '/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -61,7 +61,7 @@ class Oauth extends Client
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
