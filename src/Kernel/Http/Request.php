@@ -19,7 +19,7 @@ use InvalidArgumentException;
 
 class Request
 {
-    protected $timeout = 60.0;
+    protected $timeout = 20.0;
     /**
      * @var bool
      */
@@ -31,6 +31,7 @@ class Request
 
     public function __construct()
     {
+        $this->timeout = config('bytedance.http.timeout', 20.0);
     }
 
     /**
