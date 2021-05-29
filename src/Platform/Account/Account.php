@@ -55,7 +55,7 @@ class Account extends Client
      *
      * @return void
      */
-    public function getRedriectUrl(string $url)
+    public function getRedirectUrl(string $url)
     {
         $response = $this->httpGetRedirect($url);
 
