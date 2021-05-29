@@ -55,12 +55,12 @@ class Account extends Client
      *
      * @return void
      */
-    public function getDouyinUid(string $url)
+    public function getRedriectUrl(string $url)
     {
         $response = $this->httpGetRedirect($url);
 
-        $redrict_url = $response->getHeaderLine('X-Guzzle-Redirect-History');
+        $redriect_url = $response->getHeaderLine('X-Guzzle-Redirect-History');
 
-        return explode('/', parse_url($redrict_url)['path'])[3];
+        return $redriect_url;
     }
 }
