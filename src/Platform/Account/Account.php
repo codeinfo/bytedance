@@ -76,4 +76,17 @@ class Account extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    public function getPoiInfo($poi_id)
+    {
+        $query = [
+            'poi_id' => $poi_id,
+        ];
+
+        $this->baseUri = 'https://www.iesdouyin.com';
+
+        $response = $this->httpGet('/web/api/v2/poi/detail/', $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
