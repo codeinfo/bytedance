@@ -86,4 +86,40 @@ class Oauth extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * 获取应用全局token 两小时刷新
+     *
+     * @return array
+     */
+    public function clientToken()
+    {
+        $query = [
+            'client_key' => $this->app['config']['client_key'],
+            'client_secret' => $this->app['config']['client_secret'],
+            'grant_type' => 'client_credential',
+        ];
+
+        $response = $this->httpGet('/oauth/client_token/', $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 获取票据
+     *
+     * @return void
+     */
+    public function getTicket()
+    {
+        // Cache::tags('bytedance')->has('client_token');
+        $query = [
+            'access_token' => 'clt.96f1323d85d6ab3e0cf2d2830b7c6b3dI5DoIRVmgTz7eowk2v5ESPitdLLt',
+        ];
+
+        $response = $this->httpGet('/js/getticket/', $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
 }

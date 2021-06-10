@@ -63,4 +63,17 @@ class Account extends Client
 
         return $redriect_url;
     }
+
+    public function getHomePageUserInfo($sec_uid)
+    {
+        $query = [
+            'sec_uid' => $sec_uid,
+        ];
+
+        $this->baseUri = 'https://www.iesdouyin.com';
+
+        $response = $this->httpGet('/web/api/v2/user/info/', $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
