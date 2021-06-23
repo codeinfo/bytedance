@@ -33,10 +33,10 @@ class Oauth extends Client
             'redirect_uri' => $redirect_uri,
         ];
 
-        $url = $this->baseUri . '/platform/oauth/connect/?';
+        $url = $this->baseUri.'/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&' . $key . '=' . $value;
+            $url .= '&'.$key.'='.$value;
         }
 
         return $url;
@@ -61,7 +61,7 @@ class Oauth extends Client
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&' . $key . '=' . $value;
+            $url .= '&'.$key.'='.$value;
         }
 
         return $url;
@@ -88,7 +88,7 @@ class Oauth extends Client
     }
 
     /**
-     * 获取应用全局token 两小时刷新
+     * 获取应用全局token 两小时刷新.
      *
      * @return array
      */
@@ -106,7 +106,7 @@ class Oauth extends Client
     }
 
     /**
-     * 获取票据
+     * 获取票据.
      *
      * @return void
      */
@@ -121,5 +121,4 @@ class Oauth extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
-
 }
