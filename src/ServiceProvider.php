@@ -23,7 +23,7 @@ class ServiceProvider extends LaravelServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/bytedance.php' => config_path('bytedance.php'),
+            __DIR__.'/../config/bytedance.php' => config_path('bytedance.php'),
         ], 'laravel-bytedance');
     }
 }
