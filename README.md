@@ -5,7 +5,7 @@
 
         composer require codeinfo/bytedance-for-laravel
 
-## 使用方法
+## 使用方法2
 
         use Codeinfo\ByteDanceLaravel\Factory;
 
