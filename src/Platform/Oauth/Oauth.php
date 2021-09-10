@@ -104,6 +104,23 @@ class Oauth extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+    
+     /**
+     * 刷新用户 refresh_token
+     * @param string $refresh_token
+     * @return mixed
+     */
+    public function refreshToken(string $refresh_token)
+    {
+        $query = [
+            'client_key' => $this->app['config']['client_key'],
+            'refresh_token' => $refresh_token
+        ];
+
+        $response = $this->httpGet('/oauth/renew_refresh_token/', $query);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 
     /**
      * 获取应用全局token 两小时刷新.
