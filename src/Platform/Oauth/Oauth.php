@@ -110,7 +110,7 @@ class Oauth extends Client
      * @param string $refresh_token
      * @return mixed
      */
-    public function refreshToken(string $refresh_token)
+    public function renewRefreshToken(string $refresh_token)
     {
         $query = [
             'client_key' => $this->app['config']['client_key'],
