@@ -44,7 +44,7 @@ class Account extends Client
      */
     public function decryptMobile(string $string)
     {
-        $key = $this->app['config']['client_key'];
+        $key = $this->app['config']['client_secret'];
         $iv = substr($key, 0, 16);
 
         return openssl_decrypt(base64_decode($string), 'aes-256-cbc', $key, OPENSSL_RAW_DATA, $iv);
