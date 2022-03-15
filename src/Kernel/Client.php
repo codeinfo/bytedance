@@ -84,16 +84,16 @@ class Client extends Request
      * @param string $video_path
      * @return mixed
      */
-    public function httpPostUpload($url, array $query, string $video_path)
+    public function httpPostUpload($url, array $query, string $type, string $video_path)
     {
         $options = [
             'query' => $query,
             'multipart' => [
                 [
-                    'name' => 'video',
+                    'name' => $type,
                     'contents' => fopen($video_path, 'r'),
                     'headers' => [
-                        'Content-Type' => 'video/mp4',
+                        'Content-Type' => 'multipart/form-data',
                     ],
                 ],
             ],
