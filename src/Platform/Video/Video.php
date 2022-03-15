@@ -30,7 +30,7 @@ class Video extends Client
         $response = $this->httpPostUpload('/video/upload/', [
             'open_id' => $open_id,
             'access_token' => $access_token,
-        ], $video_path);
+        ], 'video',$video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
