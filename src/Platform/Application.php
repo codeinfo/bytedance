@@ -19,6 +19,7 @@ class Application extends ServiceContainer
         Oauth\ServiceProvider::class,
         Account\ServiceProvider::class,
         Video\ServiceProvider::class,
+        Image\ServiceProvider::class,
     ];
 
     /**
