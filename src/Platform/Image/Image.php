@@ -15,7 +15,7 @@ class Image extends Client
         $response = $this->httpPostUpload('/image/upload/', [
             'open_id' => $open_id,
             'access_token' => $access_token,
-        ], $image_path);
+        ], 'image', $image_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
