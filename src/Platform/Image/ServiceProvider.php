@@ -12,7 +12,7 @@ class ServiceProvider implements ServiceProviderInterface
      */
     public function register(Container $app)
     {
-        $app['video'] = function ($app) {
+        $app['image'] = function ($app) {
             return new Image($app);
         };
     }
