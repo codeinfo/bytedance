@@ -41,9 +41,9 @@ class Client extends Request
      * @param array $query
      * @return mixed
      */
-    public function httpGet(string $url, array $query = [])
+    public function httpGet(string $url, array $query = [], $header = [])
     {
-        return $this->request($url, 'GET', ['query' => $query]);
+        return $this->request($url, 'GET', ['query' => $query, 'headers' => $header]);
     }
 
     /**

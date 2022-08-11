@@ -30,7 +30,7 @@ class Video extends Client
         $response = $this->httpPostUpload('/video/upload/', [
             'open_id' => $open_id,
             'access_token' => $access_token,
-        ], 'video',$video_path);
+        ], 'video', $video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -75,7 +75,7 @@ class Video extends Client
             'content' => $content,
         ];
 
-        if (! empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
+        if (!empty($comment_id)) { // 需要回复的评论id（如果需要回复的是视频不传此字段）
             array_merge($form_params, [
                 'comment_id' => $comment_id,
             ]);
@@ -105,6 +105,13 @@ class Video extends Client
         ], [
             'item_ids' => $item_ids,
         ]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    public function poiSearch($access_token, array $form_params)
+    {
+        $response = $this->httpGet('/poi/search/keyword/', $form_params, ['access-token' => $access_token]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
