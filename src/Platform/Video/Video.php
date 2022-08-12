@@ -115,4 +115,11 @@ class Video extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    public function shareId($access_token, array $form_params)
+    {
+        $response = $this->httpGet('/share-id/', $form_params, ['access-token' => $access_token]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
