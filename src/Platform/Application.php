@@ -20,7 +20,8 @@ class Application extends ServiceContainer
         Account\ServiceProvider::class,
         Video\ServiceProvider::class,
         Image\ServiceProvider::class,
-        Ticket\ServiceProvider::class
+        Ticket\ServiceProvider::class,
+        Data\ServiceProvider::class,
     ];
 
     /**
