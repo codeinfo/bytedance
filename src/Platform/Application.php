@@ -22,6 +22,7 @@ class Application extends ServiceContainer
         Image\ServiceProvider::class,
         Ticket\ServiceProvider::class,
         Data\ServiceProvider::class,
+        Life\ServiceProvider::class,
     ];
 
     /**

@@ -33,10 +33,10 @@ class Oauth extends Client
             'redirect_uri' => $redirect_uri,
         ];
 
-        $url = $this->baseUri.'/platform/oauth/connect/?';
+        $url = $this->baseUri . '/platform/oauth/connect/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -61,7 +61,7 @@ class Oauth extends Client
         $url = 'https://aweme.snssdk.com/oauth/authorize/v2/?';
 
         foreach ($query as $key => $value) {
-            $url .= '&'.$key.'='.$value;
+            $url .= '&' . $key . '=' . $value;
         }
 
         return $url;
@@ -86,7 +86,7 @@ class Oauth extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
-    
+
     /**
      * 刷新用户token
      * @param string $refresh_token
@@ -104,8 +104,8 @@ class Oauth extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
-    
-     /**
+
+    /**
      * 刷新用户 refresh_token
      * @param string $refresh_token
      * @return mixed
@@ -134,10 +134,17 @@ class Oauth extends Client
             'client_secret' => $this->app['config']['client_secret'],
             'grant_type' => 'client_credential',
         ];
+        $key = sprintf($this->app['config']['cache_client_access_token_key'], $this->app['config']['client_key']);
 
-        $response = $this->httpGet('/oauth/client_token/', $query);
+        $accessToken = Cache::remember($key, 7200, function () use ($query) {
+            $response = $this->httpGet('/oauth/client_token/', $query);
 
-        return json_decode($response->getBody()->getContents(), true);
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            return $data['data']['access_token'];
+        });
+
+        return $accessToken;
     }
 
     /**
