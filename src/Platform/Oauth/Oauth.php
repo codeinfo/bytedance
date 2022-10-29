@@ -12,6 +12,7 @@
 namespace Codeinfo\LaravelBytedance\Platform\Oauth;
 
 use Codeinfo\LaravelBytedance\Kernel\Client;
+use Illuminate\Support\Facades\Cache;
 
 class Oauth extends Client
 {
