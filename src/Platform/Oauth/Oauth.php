@@ -137,15 +137,15 @@ class Oauth extends Client
         ];
         $key = sprintf($this->app['config']['cache_client_access_token_key'], $this->app['config']['client_key']);
 
-        // $accessToken = Cache::remember($key, 7200, function () use ($query) {
+//        $accessToken = Cache::remember($key, 5000, function () use ($query) {
         $response = $this->httpGet('/oauth/client_token/', $query);
 
         $data = json_decode($response->getBody()->getContents(), true);
 
-        return $data['data']['access_token'];
-        // });
-
-        // return $accessToken;
+        $accessToken =  $data['data']['access_token'];
+//        });
+//
+        return $accessToken;
     }
 
     /**

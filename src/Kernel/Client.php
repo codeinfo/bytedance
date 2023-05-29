@@ -46,6 +46,11 @@ class Client extends Request
         return $this->request($url, 'GET', ['query' => $query, 'headers' => $header]);
     }
 
+    public function httpPost(string $url, array $form_params = [], $header = [])
+    {
+        return $this->request($url, 'POST', ['json' => $form_params, 'headers' => $header]);
+    }
+
     /**
      * Http Post Json.
      *
