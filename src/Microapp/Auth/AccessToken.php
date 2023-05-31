@@ -39,19 +39,20 @@ class AccessToken extends Client
      */
     public function code2Session($data)
     {
-        $query = array_merge($this->app['config'], [
+        $json = array_merge($this->app['config'], [
             'grant_type' => 'client_credential',
         ]);
 
         if (Arr::has($data, 'code') || Arr::has($data, 'anonymous_code')) {
-            $query = array_merge($query, $data);
+            $json = array_merge($json, $data);
         } else {
             throw new InvalidArgumentException('code 和 anonymous_code 至少要有一个');
         }
 
-        $response = $this->httpGet('/api/apps/jscode2session', $query);
+        $response = $this->httpPostJson('/api/apps/v2/jscode2session', [], $json);
+        $result = json_decode($response->getBody()->getContents(), true);
 
-        return json_decode($response->getBody()->getContents(), true);
+        return $result['data'];
     }
 
     /**
@@ -91,14 +92,14 @@ class AccessToken extends Client
     private function getToken(): \Closure
     {
         return function () {
-            $query = array_merge($this->app['config'], [
+            $json = array_merge($this->app['config'], [
                 'grant_type' => 'client_credential',
             ]);
 
-            $response = $this->httpGet('/api/apps/token', $query);
+            $response = $this->httpPostJson('/api/apps/v2/token', [], $json);
             $result = json_decode($response->getBody()->getContents(), true);
 
-            return $result['access_token'];
+            return $result['data']['access_token'];
         };
     }
 }
