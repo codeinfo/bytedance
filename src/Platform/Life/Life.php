@@ -40,7 +40,7 @@ class Life extends Client
      */
     public function verifyRecord(array $params)
     {
-        $response = $this->httpGet('/goodlife/v1/fulfilment/certificate/verify_record/query/', [], $params, ['access-token' => $this->accessToken]);
+        $response = $this->httpGet('/goodlife/v1/fulfilment/certificate/verify_record/query/', $params, ['access-token' => $this->accessToken]);
 
         return json_decode($response->getBody()->getContents(), true);
     }
