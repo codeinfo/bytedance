@@ -70,6 +70,29 @@ class Life extends Client
         return json_decode($response->getBody()->getContents(), true);
     }
 
+    /**
+     * 查询商品线上数据
+     * @param array $params
+     * @return mixed
+     */
+    public function productOnlineGet(array $params)
+    {
+        $response = $this->httpGet('/goodlife/v1/goods/product/online/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 上下架
+     * @return mixed
+     */
+    public function goodsProductOperate($params)
+    {
+        $response = $this->httpPost('/goodlife/v1/goods/product/operate/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     public function goodsTemplate(array $params)
     {
         $response = $this->httpGet('/goodlife/v1/goods/template/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
@@ -127,6 +150,32 @@ class Life extends Client
     public function certificateDetail(array $params)
     {
         $response = $this->httpGet('/goodlife/v1/fulfilment/certificate/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    //代运营相关
+
+    /**
+     * 合作列表获取
+     * @param array $params
+     * @return mixed
+     */
+    public function partnerOrderList(array $params)
+    {
+        $response = $this->httpGet('/goodlife/v1/partner/order/query/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 合作详情查询
+     * @param array $params
+     * @return mixed
+     */
+    public function partnerOrderGet(array $params)
+    {
+        $response = $this->httpGet('/goodlife/v1/partner/order/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
 
         return json_decode($response->getBody()->getContents(), true);
     }
