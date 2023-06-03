@@ -169,6 +169,18 @@ class Life extends Client
     }
 
     /**
+     * 同步库存
+     * @param $params
+     * @return mixed
+     */
+    public function goodsStockSync($params)
+    {
+        $response = $this->httpGet('/goodlife/v1/goods/stock/sync/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
      * 合作详情查询
      * @param array $params
      * @return mixed
@@ -176,6 +188,66 @@ class Life extends Client
     public function partnerOrderGet(array $params)
     {
         $response = $this->httpGet('/goodlife/v1/partner/order/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 创建合作关系
+     * @param $params
+     * @return mixed
+     */
+    public function partnerOrderCreate($params)
+    {
+        $response = $this->httpPost('/goodlife/v1/partner/order/create/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 创建/修改佣金
+     * @param $params
+     * @return mixed
+     */
+    public function partnerProductCommission($params)
+    {
+        $response = $this->httpPost('/goodlife/v1/partner/product_commission/save/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 佣金变更记录列表
+     * @param $params
+     * @return mixed
+     */
+    public function partnerCommissionRecordQuery($params)
+    {
+        $response = $this->httpGet('/goodlife/v1/partner/commission_record/query/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 佣金变更记录详情
+     * @param $params
+     * @return mixed
+     */
+    public function partnerCommissionRecordGet($params)
+    {
+        $response = $this->httpGet('/goodlife/v1/partner/commission_record/get/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 商品佣金详情
+     * @param $params
+     * @return mixed
+     */
+    public function partnerProductCommissionQuery($params)
+    {
+        $response = $this->httpGet('/partner/product_commission/query/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
 
         return json_decode($response->getBody()->getContents(), true);
     }
