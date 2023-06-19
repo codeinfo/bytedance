@@ -251,4 +251,48 @@ class Life extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * 发起店铺匹配 POI 同步任务
+     * @param $params
+     * @return mixed
+     */
+    public function poiSupplierMatch($params)
+    {
+        $response = $this->httpPost('/poi/v2/supplier/match/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 店铺匹配任务结果查询
+     * @param $params
+     * @return mixed
+     */
+    public function poiSupplierQueryTask($params)
+    {
+        $response = $this->httpGet('/poi/v2/supplier/query/task/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    /**
+     * 商铺同步
+     * @param $params
+     * @return mixed
+     */
+    public function poiSupplierSync($params)
+    {
+        $response = $this->httpPost('/poi/supplier/sync/', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
+    //
+    public function queryOrder($params)
+    {
+        $response = $this->httpPost('/api/apps/trade/v2/order/query_order', $params, ['access-token' => $this->accessToken, 'Content-Type' => 'application/json']);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }

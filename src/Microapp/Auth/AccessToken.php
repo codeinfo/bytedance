@@ -12,7 +12,9 @@
 namespace Codeinfo\LaravelBytedance\Microapp\Auth;
 
 use Codeinfo\LaravelBytedance\Kernel\Client;
+use Codeinfo\LaravelBytedance\Kernel\Exceptions\Exception;
 use Codeinfo\LaravelBytedance\Kernel\Exceptions\InvalidArgumentException;
+use Codeinfo\LaravelBytedance\Kernel\Support\AES;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 
@@ -33,8 +35,8 @@ class AccessToken extends Client
     /**
      * 登陆.
      *
-     * @param string $code
-     * @param string $anonymous_code 匿名
+     * @param  string  $code
+     * @param  string  $anonymous_code  匿名
      * @return void
      */
     public function code2Session($data)
@@ -58,7 +60,7 @@ class AccessToken extends Client
     /**
      * 创建二维码
      *
-     * @param array $form_params
+     * @param  array  $form_params
      * @return stream 图片流
      */
     public function createQRCode(string $path)
@@ -81,7 +83,7 @@ class AccessToken extends Client
      */
     private function getAccessToken()
     {
-        return Cache::remember($this->cachePrefix.'access_token', 7200, $this->getToken());
+        return Cache::remember($this->cachePrefix . 'access_token', 7200, $this->getToken());
     }
 
     /**
@@ -101,5 +103,23 @@ class AccessToken extends Client
 
             return $result['data']['access_token'];
         };
+    }
+
+    /**
+     * 解密敏感数据
+     * @param  string  $encryptedData
+     * @param  string  $sessionKey
+     * @param  string  $iv
+     * @return array
+     */
+    private function decryptData(string $encryptedData, string $sessionKey, string $iv): array
+    {
+        $decrypted = AES::decrypt(
+            base64_decode($encryptedData, false),
+            base64_decode($sessionKey, false),
+            base64_decode($iv, false),
+        );
+
+        return json_decode($decrypted, true);
     }
 }

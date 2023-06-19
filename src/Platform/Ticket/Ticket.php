@@ -14,4 +14,12 @@ class Ticket extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+
+    public function getJsTicket($access_token)
+    {
+        $response = $this->httpGet('/js/getticket/', [], ['access-token' => $access_token]);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
 }
