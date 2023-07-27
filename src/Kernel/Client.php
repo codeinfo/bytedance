@@ -12,6 +12,8 @@
 namespace Codeinfo\LaravelBytedance\Kernel;
 
 use Codeinfo\LaravelBytedance\Kernel\Http\Request;
+use GuzzleHttp\Psr7\LazyOpenStream;
+use Illuminate\Support\Facades\Log;
 
 class Client extends Request
 {
@@ -89,21 +91,20 @@ class Client extends Request
      * @param string $video_path
      * @return mixed
      */
-    public function httpPostUpload($url, array $query, string $type, string $video_path)
+    public function httpPostUpload($url, string $open_id, string $access_token, string $video_path)
     {
         $options = [
-            'query' => $query,
+            'headers' => [
+                'access-token' => $access_token
+            ],
             'multipart' => [
                 [
-                    'name' => $type,
-                    'contents' => fopen($video_path, 'r'),
-                    'headers' => [
-                        'Content-Type' => 'multipart/form-data',
-                    ],
-                ],
-            ],
+                    'name' => 'video',
+                    'contents' => fopen($video_path, 'r')
+                ]
+            ]
         ];
 
-        return $this->request($url, 'POST', $options);
+        return $this->request($url . '?open_id=' . $open_id, 'POST', $options);
     }
 }

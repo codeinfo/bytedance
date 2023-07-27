@@ -27,10 +27,7 @@ class Video extends Client
      */
     public function upload(string $open_id, string $access_token, string $video_path)
     {
-        $response = $this->httpPostUpload('/video/upload/', [
-            'open_id' => $open_id,
-            'access_token' => $access_token,
-        ], 'video', $video_path);
+        $response = $this->httpPostUpload('https://open.douyin.com/api/douyin/v1/video/upload_video/', $open_id, $access_token, $video_path);
 
         return json_decode($response->getBody()->getContents(), true);
     }
@@ -45,10 +42,14 @@ class Video extends Client
      */
     public function create(string $open_id, string $access_token, array $form_params)
     {
-        $response = $this->httpPostJson('/video/create/', [
-            'open_id' => $open_id,
-            'access_token' => $access_token,
-        ], $form_params);
+        $response = $this->httpPost(
+            'https://open.douyin.com/api/douyin/v1/video/create_video/?open_id=' . $open_id,
+            $form_params,
+            [
+                'access-token' => $access_token,
+                'content-type' => 'application/json'
+            ]
+        );
 
         return json_decode($response->getBody()->getContents(), true);
     }
