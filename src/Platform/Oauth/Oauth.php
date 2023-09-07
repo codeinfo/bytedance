@@ -23,9 +23,10 @@ class Oauth extends Client
      *
      * @param string $scope
      * @param string $redirect_uri
+     * @param string $state
      * @return string
      */
-    public function genrateUrl(string $scope, string $redirect_uri)
+    public function genrateUrl(string $scope, string $redirect_uri, string $state = '')
     {
         $query = [
             'client_key' => $this->app['config']['client_key'],
@@ -33,6 +34,9 @@ class Oauth extends Client
             'scope' => $scope,
             'redirect_uri' => $redirect_uri,
         ];
+        if (!blank($state)) {
+            $query['state'] = $state;
+        }
 
         $url = $this->baseUri . '/platform/oauth/connect/?';
 
@@ -47,6 +51,7 @@ class Oauth extends Client
      * 生成用户静默授权地址
      *
      * @param string $redirect_uri
+     * @param string|null $state
      * @return string
      */
     public function genrateBaseUrl(string $redirect_uri, string $state = null)
