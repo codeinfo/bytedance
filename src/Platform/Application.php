@@ -23,6 +23,7 @@ class Application extends ServiceContainer
         Ticket\ServiceProvider::class,
         Data\ServiceProvider::class,
         Life\ServiceProvider::class,
+        Hudong\ServiceProvider::class
     ];
 
     /**
