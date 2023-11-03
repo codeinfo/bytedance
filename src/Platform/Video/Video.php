@@ -100,7 +100,7 @@ class Video extends Client
      */
     public function data(string $open_id, string $access_token, array $item_ids)
     {
-        $response = $this->httpPostJson('/video/data/', [
+        $response = $this->httpPostJson('https://open.douyin.com/api/douyin/v1/video/video_data/', [
             'open_id' => $open_id,
             'access_token' => $access_token,
         ], [
