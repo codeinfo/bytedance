@@ -22,4 +22,15 @@ class Hudong extends Client
 
         return json_decode($response->getBody()->getContents(), true);
     }
+
+    /**
+     * 回复视频评论
+     * @param $open_id
+     * @param $access_token
+     * @param $params
+     */
+    public function commentReply($open_id, $access_token, $params)
+    {
+        $response = $this->httpPost('/item/comment/reply/?open_id=' . $open_id, $params, ['access-token' => $access_token, 'Content-Type' => 'application/json']);
+    }
 }
