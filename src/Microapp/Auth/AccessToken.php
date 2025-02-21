@@ -63,15 +63,25 @@ class AccessToken extends Client
      * @param  array  $form_params
      * @return stream 图片流
      */
-    public function createQRCode(string $path)
+    public function createQRCode($client_token, $data)
     {
-        $json = [
-            'access_token' => $this->access_token,
-            'appname' => 'douyin',
-            'path' => $path,
+        $header = [
+            'content-type' => 'application/json',
+            'access-token' => $client_token,
         ];
 
-        $response = $this->httpPostJson('/api/apps/qrcode', [], $json);
+        $response = $this->httpPost('https://open.douyin.com/api/apps/v1/qrcode/create/', $data, $header);
+
+        return $response->getBody()->getContents();
+    }
+
+    public function createSchemeV2($client_token, $data)
+    {
+        $header = [
+            'content-type' => 'application/json',
+            'access-token' => $client_token,
+        ];
+        $response = $this->httpPost('https://open.douyin.com/api/apps/v1/url/generate_schema/', $data, $header);
 
         return $response->getBody()->getContents();
     }
@@ -105,6 +115,16 @@ class AccessToken extends Client
         };
     }
 
+    public function clientToken()
+    {
+        $json = array_merge($this->app['config'], [
+            'grant_type' => 'client_credential',
+        ]);
+        $response = $this->httpPostJson('https://open.douyin.com/oauth/client_token/', [], $json);
+
+        return json_decode($response->getBody()->getContents(), true);
+    }
+
     /**
      * 解密敏感数据
      * @param  string  $encryptedData
@@ -112,7 +132,7 @@ class AccessToken extends Client
      * @param  string  $iv
      * @return array
      */
-    private function decryptData(string $encryptedData, string $sessionKey, string $iv): array
+    public function decryptData(string $encryptedData, string $sessionKey, string $iv): array
     {
         $decrypted = AES::decrypt(
             base64_decode($encryptedData, false),
